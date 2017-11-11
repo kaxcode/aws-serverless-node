@@ -1,12 +1,12 @@
 'use strict';
 
 const uuid = require('uuid');
-const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
+const AWS = require('aws-sdk');
+const table = 'todo-api-dev';
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.create = (event, context, callback) => {
-  const timestamp = new Date().getTime();
   const data = JSON.parse(event.body);
   if (typeof data.text !== 'string') {
     console.error('Validation Failed');
@@ -19,13 +19,13 @@ module.exports.create = (event, context, callback) => {
   }
 
   const params = {
-    TableName: process.env.DYNAMODB_TABLE,
+    TableName: table,
     Item: {
       id: uuid.v1(),
       text: data.text,
       checked: false,
-      createdAt: timestamp,
-      updatedAt: timestamp,
+      createdAt: new Date().getTime(),
+      updatedAt: new Date().getTime(),
     },
   };
 
@@ -53,7 +53,7 @@ module.exports.create = (event, context, callback) => {
 
 module.exports.delete = (event, context, callback) => {
   const params = {
-    TableName: process.env.DYNAMODB_TABLE,
+    TableName: table,
     Key: {
       id: event.pathParameters.id,
     },
@@ -83,7 +83,7 @@ module.exports.delete = (event, context, callback) => {
 
 module.exports.get = (event, context, callback) => {
   const params = {
-    TableName: process.env.DYNAMODB_TABLE,
+    TableName: table,
     Key: {
       id: event.pathParameters.id,
     },
@@ -135,7 +135,6 @@ module.exports.getAll = (event, context, callback) => {
 };
 
 module.exports.update = (event, context, callback) => {
-  const timestamp = new Date().getTime();
   const data = JSON.parse(event.body);
 
   // validation
@@ -150,7 +149,7 @@ module.exports.update = (event, context, callback) => {
   }
 
   const params = {
-    TableName: process.env.DYNAMODB_TABLE,
+    TableName: table,
     Key: {
       id: event.pathParameters.id,
     },
@@ -160,7 +159,7 @@ module.exports.update = (event, context, callback) => {
     ExpressionAttributeValues: {
       ':text': data.text,
       ':checked': data.checked,
-      ':updatedAt': timestamp,
+      ':updatedAt': new Date().getTime(),
     },
     UpdateExpression: 'SET #todo_text = :text, checked = :checked, updatedAt = :updatedAt',
     ReturnValues: 'ALL_NEW',
