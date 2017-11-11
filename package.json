@@ -1,0 +1,19 @@
+{
+  "name": "aws-serverless-node",
+  "version": "1.0.0",
+  "description": "REST NodeJS API with aws-serverless",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaxcode/aws-serverless-node.git"
+  },
+  "author": "Kenia Valladarez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaxcode/aws-serverless-node/issues"
+  },
+  "homepage": "https://github.com/kaxcode/aws-serverless-node#readme"
+}
