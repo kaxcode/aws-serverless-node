@@ -20,7 +20,7 @@ provider:
 
 functions:
   create:
-    handler: handler.create
+    handler: todos.create
     events:
       - http:
           path: todos
@@ -28,7 +28,7 @@ functions:
           cors: true
 
   getAll:
-    handler: handler.getAll
+    handler: todos.getAll
     events:
       - http:
           path: todos
@@ -36,7 +36,7 @@ functions:
           cors: true
 
   get:
-    handler: handler.get
+    handler: todos.get
     events:
       - http:
           path: todos/{id}
@@ -44,7 +44,7 @@ functions:
           cors: true
 
   update:
-    handler: handler.update
+    handler: todos.update
     events:
       - http:
           path: todos/{id}
@@ -52,7 +52,7 @@ functions:
           cors: true
 
   delete:
-    handler: handler.delete
+    handler: todos.delete
     events:
       - http:
           path: todos/{id}
